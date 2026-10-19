@@ -1,167 +1,174 @@
 # CD-MAN
 
-Порт игры CD-MAN 2.0 (Creative Dimensions, 1992) — вариации на тему
-«Пакмана» для EGA. CD-Man собирает точки в пяти лабиринтах-картинах:
-парк у замка, тропические острова, космос, достопримечательности мира и
-ночное озеро. Его преследуют четыре монстра, энергозаряды в углах на время
-делают их съедобными, а в лабиринте появляются бонусы.
+**English** | [Русский](README.ru.md)
 
-Работает на Linux, macOS и Windows.
+A port of CD-MAN 2.0 (Creative Dimensions, 1992), a Pac-Man variation for
+EGA. CD-Man eats dots in five picture mazes: a park by a castle, tropical
+islands, outer space, world landmarks and a lake at night. Four monsters
+chase him; energizers in the corners make them edible for a while, and
+bonuses show up in the maze.
 
-![Игровой процесс](docs/screenshots/gameplay.gif)
+Runs on Linux, macOS and Windows.
+
+![Gameplay](docs/screenshots/gameplay.gif)
 
 | | |
 |---|---|
-| ![Заставка](docs/screenshots/title.png) | ![Меню](docs/screenshots/menu.png) |
-| ![Парк](docs/screenshots/level1.png) | ![Космос](docs/screenshots/level3.png) |
-| ![Достопримечательности](docs/screenshots/level4.png) | ![Справка](docs/screenshots/help.png) |
-| ![Десять лучших](docs/screenshots/top10.png) | ![Статистика](docs/screenshots/stats.png) |
+| ![Title](docs/screenshots/title.png) | ![Menu](docs/screenshots/menu.png) |
+| ![Park](docs/screenshots/level1.png) | ![Space](docs/screenshots/level3.png) |
+| ![Landmarks](docs/screenshots/level4.png) | ![Help](docs/screenshots/help.png) |
+| ![Top 10](docs/screenshots/top10.png) | ![Statistics](docs/screenshots/stats.png) |
 
-## Сборка и запуск
+## Building and running
 
-Нужен Go 1.25 или новее.
+Requires Go 1.25 or newer.
 
 ```sh
-go build -o cdman .   # cdman.exe на Windows
+go build -o cdman .   # cdman.exe on Windows
 ./cdman
 ```
 
-`make dist` собирает версии для Linux, macOS и Windows (amd64 и arm64) в
-каталог `dist/`. Сборка возможна на любой из этих систем для любой другой.
+`make dist` builds Linux, macOS and Windows versions (amd64 and arm64) into
+`dist/`. Any of these systems can build for any other.
 
-На Linux нужны OpenGL (Mesa) и ALSA (`libasound`). В настольных
-дистрибутивах они обычно уже установлены.
+On Linux, OpenGL (Mesa) and ALSA (`libasound`) are required. Desktop
+distributions usually have them installed already.
 
-## Файлы игры
+## Game files
 
-Порту нужны файлы оригинальной игры CD-MAN 2.0: программа `CDMAN2.EXE`
-(из неё берутся лабиринты, тексты и таблицы) и картинки `*.CDM`. В
-комплект они не входят. Игра ищет их:
+The port needs the files of the original CD-MAN 2.0: the program
+`CDMAN2.EXE` (mazes, texts and tables are taken from it) and the `*.CDM`
+pictures. They are not included. The game looks for them:
 
-- рядом с программой и в её подкаталоге `Source`;
-- в текущем каталоге и в его подкаталоге `Source`;
-- в каталоге настроек игры (см. ниже).
+- next to the executable and in its `Source` subdirectory;
+- in the current directory and in its `Source` subdirectory;
+- in the game's config directory (see below).
 
-Регистр букв в именах не важен. Если файлы не найдены, игра откроет окно с
-подсказкой: тогда перетащите папку с игрой (или сами файлы) прямо в это
-окно, и игра скопирует их в каталог настроек. Каталог можно указать и
-явно: `./cdman -data путь/к/игре`.
+File names are case-insensitive. If the files are not found, the game opens
+a window with a hint: drag the game folder (or the files themselves) into
+that window, and the game copies them to the config directory. The
+directory can also be given explicitly: `./cdman -data path/to/game`.
 
-`HELP.CDM` и `HIGHSC.CDM` необязательны: без первого не будет справки,
-второй хранит таблицы рекордов и статистики. `XMUSE.BIN` из дистрибутива
-игре не нужен.
+`HELP.CDM` and `HIGHSC.CDM` are optional: without the first there is no
+help, the second holds the high score and statistics tables. `XMUSE.BIN`
+from the distribution is not needed.
 
-## Управление
+## Controls
 
-| Клавиша | Действие |
+| Key | Action |
 |---|---|
-| Стрелки, цифровой блок 8/4/6/2 | движение; в меню — выбор |
-| Первая буква пункта меню | выбрать пункт |
-| Enter | выполнить пункт меню |
-| Esc | меню во время игры (Continue — продолжить) |
-| Ctrl+Q | немедленный выход, как в оригинале — без сохранения рекордов |
-| F5 / F6 | меньше / больше задержка картинки под звук |
-| F7 / F8 / F9 | медленнее / быстрее / обычная скорость эталонной машины |
-| F11 или Alt+Enter | полноэкранный режим |
+| Arrows, numpad 8/4/6/2 | move; select in menus |
+| First letter of a menu item | select the item |
+| Enter | activate the menu item |
+| Esc | in-game menu (Continue resumes) |
+| Ctrl+Q | quit immediately, as in the original — high scores are not saved |
+| F5 / F6 | decrease / increase video delay to match audio |
+| F7 / F8 / F9 | slower / faster / normal reference machine speed |
+| F11 or Alt+Enter | fullscreen |
 
-В режиме Double первый игрок управляет клавишами W (вверх), A (влево),
-D (вправо), X или Z (вниз), второй — стрелками.
+In Double mode the first player uses W (up), A (left), D (right), X or Z
+(down), the second player uses the arrows.
 
-Геймпад работает как клавиатура: крестовина и левый стик — стрелки, нижняя
-кнопка и Start — Enter, правая кнопка и Back — Esc. Пункт меню «Control» →
-«Joystick» относится к игровому порту PC: его в порте нет, поэтому игра,
-как и оригинал без джойстика, сообщит, что джойстик не найден.
+A gamepad works like the keyboard: D-pad and left stick are the arrows, the
+bottom button and Start are Enter, the right button and Back are Esc. The
+menu item “Control” → “Joystick” refers to the PC game port: the port has
+none, so the game, like the original without a joystick, reports that no
+joystick was found.
 
-Если звук отстаёт от картинки (так бывает с Bluetooth-наушниками и
-колонками), подберите задержку клавишами F5/F6: шаг — 20 мс, значение видно
-в заголовке окна и запоминается.
+If the sound lags behind the picture (as happens with Bluetooth headphones
+and speakers), adjust the delay with F5/F6: the step is 20 ms, the value is
+shown in the window title and is remembered.
 
-## Меню
+## Menu
 
-Меню работает в текстовом режиме, как в оригинале.
+The menu runs in text mode, as in the original.
 
-- **SEE**: Top-10 — таблица десяти лучших (пробел — статистика), Info —
-  справка, Demo — демонстрация, Position — посмотреть на прерванную игру.
-- **SPEED**: скорость игры от Zzzzz… до Warp; стрелки вверх и вниз меняют
-  её плавно, число показывает текущее значение (63 — Normal).
-- **GAME**: Start — новая игра, Continue — продолжить прерванную, Control —
-  клавиатура или джойстик, Quit — выход с сохранением таблицы рекордов.
-- **PLAYER**: One — один игрок, Two — двое по очереди, Double — двое
-  одновременно.
-- **SOUND**: звук PC-спикера включён или выключен.
+- **SEE**: Top-10 — the ten best players (Space shows statistics), Info —
+  help, Demo — demonstration, Position — look at the interrupted game.
+- **SPEED**: game speed from Zzzzz… to Warp; the up and down arrows change
+  it smoothly, the number shows the current value (63 is Normal).
+- **GAME**: Start — new game, Continue — resume the interrupted one,
+  Control — keyboard or joystick, Quit — exit and save the high scores.
+- **PLAYER**: One — single player, Two — two players taking turns,
+  Double — two players at once.
+- **SOUND**: PC speaker sound on or off.
 
-Закрытие окна равносильно пункту Quit: время игры учитывается, таблица
-рекордов сохраняется.
+Closing the window is the same as Quit: playing time is counted and the
+high scores are saved.
 
-## Правила
+## Rules
 
-CD-Man съедает точки; когда их не остаётся, этап пройден. Монстры выходят
-из клетки посередине лабиринта и преследуют CD-Man; чем дальше, тем
-охотнее они идут прямо к нему. Энергозаряд в углу (в парке — огонь) на
-время делает монстров съедобными: они меняют облик и убегают, а съеденный
-монстр (100, 200, 300 и 400 очков подряд) возвращается в клетку. Время от
-времени в лабиринте появляется фрукт, за который дают очки случайной
-величины. На некоторых экранах есть тоннели. В парке у замка есть ключ:
-с ним CD-Man открывает ворота, а второй ключ даёт очки.
+CD-Man eats dots; when none are left, the stage is cleared. Monsters leave
+the pen in the middle of the maze and chase CD-Man; the further the game
+goes, the more eagerly they head straight for him. An energizer in a corner
+(a fire in the park) makes the monsters edible for a while: they change
+their look and run away, and an eaten monster (100, 200, 300 and 400 points
+in a row) returns to the pen. From time to time a fruit appears in the maze
+and is worth a random number of points. Some screens have tunnels. The park
+by the castle has a key: with it CD-Man opens the gate, and a second key
+gives points.
 
-Игра проходит пять экранов по два раза, затем третий круг — по разу.
-На последнем экране третьего круга точки не исчезают, а энергозаряды
-возвращаются: этот этап длится, пока у игрока есть жизни. Тот, кто побил
-лучший результат таблицы (и набрал не меньше 10 000 очков), увидит
-особую заставку.
+The game goes through the five screens twice, then a third round once
+each. On the last screen of the third round the dots do not disappear and
+the energizers come back: this stage lasts as long as the player has lives.
+Whoever beats the best score in the table (with at least 10,000 points)
+sees a special screen.
 
-Таблица рекордов и статистика (время игры, этап, средняя скорость, число
-ходов, съеденные монстры и бонусы) хранятся в `HIGHSC.CDM` в том же виде,
-что и у оригинала, так что файл можно переносить между портом и
-DOS-версией.
+The high score table and statistics (playing time, stage, average speed,
+number of moves, monsters and bonuses eaten) are stored in `HIGHSC.CDM` in
+the same format as the original, so the file can be moved between the port
+and the DOS version.
 
-## Параметры командной строки
+## Command-line flags
 
-| Флаг | Назначение |
+| Flag | Purpose |
 |---|---|
-| `-data путь` | каталог с файлами игры |
-| `-speed 1.0` | скорость эталонной машины (больше — быстрее) |
-| `-fullscreen` | запуск в полноэкранном режиме |
-| `-volume 0.7` | громкость 0…1 |
-| `-audio-delay мс` | задержка картинки под звук (по умолчанию — сохранённая) |
+| `-data path` | directory with the game files |
+| `-speed 1.0` | reference machine speed (higher is faster) |
+| `-fullscreen` | start in fullscreen |
+| `-volume 0.7` | volume 0…1 |
+| `-audio-delay ms` | video delay to match audio (defaults to the saved value) |
 
-Отладочные флаги описаны в [docs/ORIGINAL.md](docs/ORIGINAL.md).
+Debug flags are described in [docs/ORIGINAL.md](docs/ORIGINAL.md) (in
+Russian).
 
-## Каталог настроек
+## Config directory
 
-Таблица рекордов (`HIGHSC.CDM`), настройки (`settings.txt`) и перетащенные
-в окно файлы игры хранятся в каталоге настроек:
+The high score table (`HIGHSC.CDM`), settings (`settings.txt`) and game
+files dropped into the window are kept in the config directory:
 
 - Linux: `~/.config/cdman/`
 - macOS: `~/Library/Application Support/cdman/`
 - Windows: `%AppData%\cdman\`
 
-При первом запуске таблица рекордов читается из каталога игры, а
-сохраняется уже в каталог настроек.
+On the first run the high score table is read from the game directory, and
+from then on it is saved to the config directory.
 
-## Отличия от оригинала
+## Differences from the original
 
-- Нет защиты от копирования: оригинал при первом запуске просил назвать
-  огонь по руководству.
-- Закрытие окна сохраняет таблицу рекордов (в оригинале — только Quit).
-- Джойстика на игровом порту нет (см. «Управление»).
+- No copy protection: before the first game the original showed one of 16
+  fires and asked for its name from the manual.
+- Closing the window saves the high scores (in the original only Quit
+  does).
+- There is no game port joystick (see “Controls”).
 
-Остальное повторяет оригинал вплоть до его ошибок. Порт сверялся с
-оригиналом, исполняемым в эмуляторе: при одинаковых нажатиях состояние
-игры совпадает байт в байт на каждом тике. Подробности — в
-[docs/ORIGINAL.md](docs/ORIGINAL.md).
+Everything else follows the original, down to its bugs. The port was
+checked against the original running in an emulator: with the same key
+presses the game state matches byte for byte on every tick. Details are in
+[docs/ORIGINAL.md](docs/ORIGINAL.md) (in Russian).
 
-## Авторы
+## Authors
 
-Авторы игры — Anders Morée и Attila Biró, Creative Dimensions, 1992.
+The game was written by Anders Morée and Attila Biró, Creative Dimensions,
+1992.
 
-## Лицензия
+## License
 
-Исходный код распространяется по лицензии MIT, текст — в файле
+The source code is distributed under the MIT license, see
 [LICENSE](LICENSE).
 
-Файлы оригинальной игры в проект не входят. Права на программу, графику и
-тексты CD-MAN принадлежат её авторам (© 1992 Creative Dimensions), лицензия
-MIT на них не распространяется. Шрифты текстового режима основаны на
-[unscii-16](http://viznut.fi/unscii/), который находится в общественном
-достоянии.
+The original game files are not part of the project. The rights to the
+CD-MAN program, graphics and texts belong to their authors (© 1992 Creative
+Dimensions); the MIT license does not apply to them. The text mode fonts are
+based on [unscii-16](http://viznut.fi/unscii/), which is in the public
+domain.
