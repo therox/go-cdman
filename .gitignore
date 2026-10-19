@@ -1,0 +1,10 @@
+/cdman
+/cdman.exe
+/dist/
+
+# файлы оригинальной игры в проект не входят
+/Source/
+*.[Cc][Dd][Mm]
+*.[Ee][Xx][Ee]
+*.[Bb][Ii][Nn]
+*.[Ii][Cc][Oo]
